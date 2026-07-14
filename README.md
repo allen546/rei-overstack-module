@@ -8,6 +8,7 @@ This repository contains the source code for a Meteor Client addon designed to e
 
 ## Overview
 - **Software Affected**: Leaves Server (and any downstream forks implementing the custom Roughly Enough Items protocol packet `roughlyenoughitems:move_items_new`).
+- **Versions Affected**: Leaves server versions for Minecraft **1.21.8 build 67 and later** (including all Minecraft 1.21.10 and 1.21.11 builds) containing commit `eb3d87b` (which finished the `MOVE_ITEMS_NEW_PACKET` implementation).
 - **Severity**: High / Critical (Allows players to overstack any item up to 64, including Totems of Undying, Potions, TNT Minecarts, Ender Pearls, etc., bypassing default stack limits and causing significant economic imbalance or server-lag exploits).
 - **Vulnerability Type**: Lack of Stack Size Validation in Packet Handler.
 
