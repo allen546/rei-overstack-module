@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "rei-overstack-module",
+  "version": "${version}",
+  "name": "REI Overstack Module",
+  "description": "Meteor Client exploit module: abuses the roughlyenoughitems:move_items_new Leaves server protocol to consolidate unstackable items into overstacked slots.",
+  "authors": ["security-research"],
+  "license": "MIT",
+  "environment": "client",
+
+  "entrypoints": {
+    "meteor": [
+      "com.reiexploit.REIOverstackAddon"
+    ]
+  },
+
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "fabric": "*",
+    "minecraft": "~1.21",
+    "meteor-client": "*"
+  }
+}
