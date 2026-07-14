@@ -7,9 +7,12 @@ This repository contains the source code for a Meteor Client addon designed to e
 # Vulnerability Report: Packet-based Item Overstacking & Duplication via `move_items_new`
 
 ## Overview
-- **Software Affected**: Leaves Server (and any downstream forks implementing the custom Roughly Enough Items protocol packet `roughlyenoughitems:move_items_new`).
-- **Versions Affected**: Leaves server versions for Minecraft **1.21.8 build 67 and later** (including all Minecraft 1.21.10 and 1.21.11 builds) containing commit `eb3d87b` (which finished the `MOVE_ITEMS_NEW_PACKET` implementation).
-- **Severity**: High / Critical (Allows players to overstack any item up to 64, including Totems of Undying, Potions, TNT Minecarts, Ender Pearls, etc., bypassing default stack limits and causing significant economic imbalance or server-lag exploits).
+- **Software Affected**: Leaves Server and shedaniel's Roughly Enough Items (REI) server-side mod.
+- **Versions Affected**: 
+  - **Leaves Server**: Minecraft 1.21.8 build 67 and later (containing commit `eb3d87b` which finished the `MOVE_ITEMS_NEW_PACKET` implementation).
+  - **REI Server Mod**: All versions of the official REI mod (Fabric/Forge/NeoForge) containing `me.shedaniel.rei.impl.common.transfer.InputSlotCrafter` are similarly vulnerable.
+  - **Paper/Spigot/Purpur**: Vanilla Paper/Spigot/Purpur are **not** affected natively as they do not implement custom REI protocol packet handling.
+- **Severity**: High / Critical (Allows players to overstack any item up to 64, including Totems of Undying, Potions, TNT Minecarts, Ender Pearls, etc., bypassing default stack limits and causing significant economic imbalance).
 - **Vulnerability Type**: Lack of Stack Size Validation in Packet Handler.
 
 ---
@@ -29,7 +32,7 @@ The vulnerability resides in how the server processes the `InventorySlots` paylo
 ## Impact
 Players can exploit this packet to:
 - Overstack **Totems of Undying** up to 64 in a single slot. These stacks function correctly when held in the offhand or hotbar, meaning a player can effectively carry 64 totems in a single slot and will be virtually unkillable.
-- Overstack **TNT Minecarts** up to 64, which can be placed on rails to instigate massive explosive payloads (e.g. for rail-bomber lag exploits).
+- Overstack **TNT Minecarts** up to 64, which can be placed on rails to instigate massive explosive payloads (e.g. in TNT minecart PVP).
 - Overstack **Potions** and **Splash Potions** up to 64.
 - Overstack **Ender Pearls** up to 64.
 
