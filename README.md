@@ -13,7 +13,7 @@ It is unvalidated whether it will work on plain Fabric + REI servers, but code a
   - **Leaves Server**: Minecraft 1.21.8 build 67 and later (containing commit `eb3d87b` which finished the `MOVE_ITEMS_NEW_PACKET` implementation).
   - **REI Server Mod**: All versions of the official REI mod (Fabric/Forge/NeoForge) containing `me.shedaniel.rei.impl.common.transfer.InputSlotCrafter` are similarly vulnerable.
   - **Paper/Spigot/Purpur**: Vanilla Paper/Spigot/Purpur are **not** affected natively as they do not implement custom REI protocol packet handling.
-- **Severity**: High / Critical (Allows players to overstack any item up to 64, including Totems of Undying, Potions, TNT Minecarts, Ender Pearls, etc., bypassing default stack limits and causing significant economic imbalance).
+- **Severity**: High / Critical (Allows players to overstack any item up to 64 or higher, including Totems of Undying, Potions, TNT Minecarts, Ender Pearls, etc., bypassing default stack limits and causing significant economic imbalance).
 - **Vulnerability Type**: Lack of Stack Size Validation in Packet Handler.
 
 ---
@@ -32,10 +32,20 @@ The vulnerability resides in how the server processes the `InventorySlots` paylo
 
 ## Impact
 Players can exploit this packet to:
-- Overstack **Totems of Undying** up to 64 in a single slot. These stacks function correctly when held in the offhand or hotbar, meaning a player can effectively carry 64 totems in a single slot and will be virtually unkillable.
-- Overstack **TNT Minecarts** up to 64, which can be placed on rails to instigate massive explosive payloads (e.g. in TNT minecart PVP).
+- Overstack **Totems of Undying** up to 90 in a single slot. These stacks function correctly when held in the offhand or hotbar, meaning a player can effectively carry 90 totems in a single slot and will be virtually unkillable.
+- Overstack **TNT Minecarts** up to 90, which can be placed on rails to instigate massive explosive payloads (e.g. in TNT minecart PVP).
 - Overstack **Potions** and **Splash Potions** up to 64.
-- Overstack **Ender Pearls** up to 64.
+- Overstack **Ender Pearls** up to 99 (or higher).
+- Overstack **Firework rockets** up to 1.5k (approximate).
+
+### Why 90?
+This is because to stack, you need source slots and a single target slot to condense into. You get 54 from a large chest, 36 in your inventory, and your offhand, resulting in 91 slots total.
+
+### Why 99?
+This is due to Mojang removing stacks with over 99 items when storing, eg. unloading a chunk or logging out.
+
+### WHy 1.5k?
+Due to packet length restrictions. The full NBT tag name must be passed for each single item to be consolidated.
 
 ---
 
