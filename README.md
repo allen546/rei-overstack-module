@@ -1,6 +1,7 @@
 # REI Overstack Exploit Module (Meteor Client Addon)
 
 This repository contains the source code for a Meteor Client addon designed to exploit a vulnerability in the **Leaves** Minecraft server fork.
+It is unvalidated whether it will work on plain Fabric + REI servers, but code analysis suggests it should.
 
 ---
 
